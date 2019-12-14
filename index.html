@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">    <title>Document</title>
+
+</head>
+
+
+<body>
+    <div class="jumbotron text-center bg-info text-white">
+        <h1>Movie Facts!</h1>
+        <h3>Please enjoy this movie information site.</h3>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>In Theater</h3>
+                <ul>
+                    <li>
+                        Frozen II
+                    </li>
+                    <li>
+                        Knives Out
+                    </li>
+                    <li>
+                        Dark Waters
+                    </li>
+                    <li>
+                        Harriet
+                    </li>
+                    <li>
+                        21 Bridges
+                    </li>
+                    <li>
+                        Queen & Slim
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-4">
+                    <h3>2019 Top Rating</h3>
+                    <ul>
+                        <li>
+                            Anvengers: Endgame
+                        </li>
+                        <li>
+                            Captain Marvel
+                        </li>
+                        <li>
+                            Toy Story 4
+                        </li>
+                        <li>
+                            Dark Phoenix
+                        </li>
+                        <li>
+                            The Lego Movie 2
+                        </li>
+                        <li>
+                            Aladdin
+                        </li>
+                    </ul>
+            </div>
+
+            <div class="col-sm-4">
+                    <h3>Recent Releases</h3>
+                    <ul>
+                        <li>
+                            The Lion King
+                        </li>
+                        <li>
+                            Hobbs & Shaw
+                        </li>
+                        <li>
+                            IT: Chapter 2
+                        </li>
+                        <li>
+                            AD ASTRA
+                        </li>
+                        <li>
+                            Downtown Abbey
+                        </li>
+                        <li>
+                            Dora: the Lost City of Gold
+                        </li>
+                    </ul>
+                                 
+                    
+            </div>
+            
+        </div>
+    </div>
+   
+    <div class="container">
+        <div class="input-group my-4 text-left text-muted">
+                <input type="text" id="input-movie" placeholder="Enter Movie Name" class="form-control p-4">
+                <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" id="submit-btn">Search</button>
+    </div>  
+    
+    <div class="card shadow-lg rounded" id="card-data">
+        <div class="text-muted text-uppercase text-left details">
+            <img id="img-icon" class="icon mx-auto text-center">
+            <div class="card-header text-danger">
+                <h1 id="movie-name"></h1>
+            </div>
+            <div class="card-body">
+                <h2><strong>Movie Information</strong></h2>
+                <h6 id="movie-actor"></h6>
+                <h6 id="movie-genre"></h6>
+                <h6 id="movie-year"></h6>
+                <h6 id="movie-runtime"></h6>
+                <h6 id="movie-source"></h6>
+                <h6 id="movie-value"></h6>
+                <h2><strong>Plot</strong></h2>
+                <h5 id="movie-description"></h5>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+            var iconUrl = "";
+            $('#card-data').hide();
+            $("#submit-btn").click(function(){
+                var movieName = $("#input-movie").val();
+                   $.ajax({
+                    type: "POST",
+                    url: "http://www.omdbapi.com/?t="+movieName+"&i=tt3896198&apikey=5ff1b1cd",
+                    dataType : "json",
+                    success: function(result, status, xhr){
+                        console.log(result);
+                        $('#card-data').show();
+                        let movieTitle = result.Title;
+                        let movieActors = result.Actors;
+                        let movieGenre = result.Genre;
+                        let moveRuntime = result.Runtime;
+                        let movieRatingSource = result.Ratings[0].Source ;
+                        let movieRatingValue = result.Ratings[0].Value;
+                        let movieDescription = result.Plot;
+                        let movieImage = result.Poster;
+                        let movieYear = result.Year;
+
+                        $("#movie-name").text(movieTitle);
+                        $("#movie-actor").text(movieActors);
+                        $("#movie-genre").text(movieGenre);
+                        $("#movie-runtime").text(moveRuntime)
+                        $("#movie-source").text(movieRatingSource);
+                        $("#movie-value").text(movieRatingValue);
+                        $("#movie-description").text(movieDescription);
+                        $("#img-icon").attr('src',result.Poster);
+                        $("#movie-year").text(movieYear);
+                    },
+                        error: function(xhr, status, error){
+                        alert(error + "Try another Movie Title");
+                    
+
+                    }
+                });
+            });
+        });
+
+
+        
+    </script>
+</body>
+</html>
