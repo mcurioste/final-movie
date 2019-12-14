@@ -137,7 +137,7 @@
                 var movieName = $("#input-movie").val();
                    $.ajax({
                     type: "POST",
-                    url: "http://www.omdbapi.com/?t="+movieName+"&i=tt3896198&apikey=5ff1b1cd",
+                    url: "https://www.omdbapi.com/?t="+movieName+"&i=tt3896198&apikey=5ff1b1cd",
                     dataType : "json",
                     success: function(result, status, xhr){
                         console.log(result);
